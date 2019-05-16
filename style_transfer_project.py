@@ -38,10 +38,10 @@ target_width = 450
 target_height = 300
 total_size = target_width * target_height
 
-mean_sub = np.array([123.68, 116.779, 103.939], dtype=np.float32) #weight normalization from ImageNet
+imagenet_norm = np.array([123.68, 116.779, 103.939], dtype=np.float32) #weight normalization from ImageNet
 
-preprocess = lambda x: (np.expand_dims(np.array(x), 0) - mean_sub)[:,:,:,::-1]
-convert_back = lambda x: np.clip(x.reshape((1, target_height, target_width, 3))[:,:,:,::-1] + mean_sub, 0, 255)
+preprocess = lambda x: (np.expand_dims(np.array(x), 0) - imagenet_norm)[:,:,:,::-1]
+convert_back = lambda x: np.clip(x.reshape((1, target_height, target_width, 3))[:,:,:,::-1] + imagenet_norm, 0, 255)
 
 
 # Load in out images
@@ -193,7 +193,8 @@ def test_case_nyc_first_iteration():
   assert output_image[99][199][2] == expected_image[99][199][2]
 
 '''
-Test Cases!!
+Test Cases!! 
+(comment out 'run_style_transfer()' on line 119 so it doesn't run the 100 style transfer iterations)
 '''
 # test_case_gram_matrix()
 # test_case_content_loss()
